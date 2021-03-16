@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "DB"
+				},
+				{
+					"dataset": {
+						"referenceName": "Movie3",
+						"type": "DatasetReference"
+					},
+					"name": "Movie3"
 				}
 			],
 			"sinks": [
@@ -30,19 +37,16 @@
 			],
 			"transformations": [
 				{
-					"name": "FilterYears"
+					"name": "Union1"
 				},
 				{
-					"name": "samenstellenratings"
+					"name": "Selecteren1"
 				},
 				{
-					"name": "Surrogaatsleutel1"
-				},
-				{
-					"name": "Bestaat1"
+					"name": "Filteren1"
 				}
 			],
-			"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Csv\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_COMMITTED',\n\tformat: 'table') ~> DB\nCsv filter(toInteger(year) >= 1920 && toInteger(year) <= 1980 && rlike(genres, 'Comedy')) ~> FilterYears\nFilterYears aggregate(groupBy(year,\n\t\tmovie),\n\tRating = avg(toInteger(Rating))) ~> samenstellenratings\nsamenstellenratings keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> Surrogaatsleutel1\nSurrogaatsleutel1, DB exists(year == year,\n\tnegate:true,\n\tbroadcast: 'auto')~> Bestaat1\nBestaat1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Csv\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_COMMITTED',\n\tformat: 'table') ~> DB\nsource(output(\n\t\tmovieId as string,\n\t\ttitle as string,\n\t\tgenres as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Movie3\nCsv, Movie3 union(byName: false,\n\tpartitionBy('roundRobin', 2))~> Union1\nUnion1 select(mapColumn(\n\t\tmovieId,\n\t\tmovie,\n\t\ttitle,\n\t\tgenres,\n\t\tyear\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Selecteren1\nSelecteren1 filter(toInteger(year) >= 1920 && toInteger(year) <= 1930 ) ~> Filteren1\nFilteren1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
