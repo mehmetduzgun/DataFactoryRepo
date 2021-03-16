@@ -36,13 +36,10 @@
 					"name": "samenstellenratings"
 				},
 				{
-					"name": "CheckonDB"
-				},
-				{
 					"name": "Surrogaatsleutel1"
 				}
 			],
-			"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Csv\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_COMMITTED',\n\tformat: 'table') ~> DB\nCsv filter(toInteger(year) >= 1920 && toInteger(year) <= 1941 && rlike(genres, 'Comedy')) ~> FilterYears\nFilterYears aggregate(groupBy(year,\n\t\tmovie),\n\tRating = avg(toInteger(Rating))) ~> samenstellenratings\nSurrogaatsleutel1, DB exists(year == year,\n\tnegate:true,\n\tbroadcast: 'auto')~> CheckonDB\nsamenstellenratings keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> Surrogaatsleutel1\nCheckonDB sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Csv\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_COMMITTED',\n\tformat: 'table') ~> DB\nCsv filter(toInteger(year) >= 1920 && toInteger(year) <= 1941 && rlike(genres, 'Comedy')) ~> FilterYears\nFilterYears aggregate(groupBy(year,\n\t\tmovie),\n\tRating = avg(toInteger(Rating))) ~> samenstellenratings\nsamenstellenratings keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> Surrogaatsleutel1\nSurrogaatsleutel1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
