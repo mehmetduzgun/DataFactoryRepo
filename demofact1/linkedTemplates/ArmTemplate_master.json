@@ -1,0 +1,70 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory-naam",
+			"defaultValue": "demofact1"
+		},
+		"Output_accountKey": {
+			"type": "secureString",
+			"metadata": "Beveiligde tekenreeks voor accountKey van Output"
+		},
+		"MovieLake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://demorotterdam.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://mysecretsk.vault.azure.net/"
+		},
+		"Output_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://demorotterdam.dfs.core.windows.net"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI naar opslagaccount met gekoppelde ARM-sjablonen"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "SAS-token naar opslagaccount met gekoppelde ARM-sjablonen"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "demofact1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"Output_accountKey": {
+						"value": "[parameters('Output_accountKey')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"Output_properties_typeProperties_url": {
+						"value": "[parameters('Output_properties_typeProperties_url')]"
+					},
+					"MovieLake_properties_typeProperties_url": {
+						"value": "[parameters('MovieLake_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
