@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "output.csv",
 				"fileSystem": "out"
 			},
 			"columnDelimiter": ",",
