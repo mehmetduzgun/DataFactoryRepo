@@ -10,7 +10,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "sampledata"
+				"folderPath": {
+					"value": "output\n",
+					"type": "Expression"
+				},
+				"fileSystem": {
+					"value": "Sample-data\n",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
