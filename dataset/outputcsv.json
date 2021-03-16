@@ -10,14 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": {
-					"value": "output\n",
-					"type": "Expression"
-				},
-				"fileSystem": {
-					"value": "Sample-data\n",
-					"type": "Expression"
-				}
+				"fileName": "output.csv",
+				"fileSystem": "out"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
