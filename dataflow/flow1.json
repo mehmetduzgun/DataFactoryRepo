@@ -10,20 +10,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "Csv"
-				},
-				{
-					"dataset": {
-						"referenceName": "toazure",
-						"type": "DatasetReference"
-					},
-					"name": "DB"
-				},
-				{
-					"dataset": {
-						"referenceName": "Movie3",
-						"type": "DatasetReference"
-					},
-					"name": "Movie3"
 				}
 			],
 			"sinks": [
@@ -33,17 +19,31 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "toazure",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "toazure",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
 				}
 			],
 			"transformations": [
 				{
-					"name": "Rijwijzigen1"
+					"name": "DifferenceYears"
 				},
 				{
-					"name": "Afgeleidekolom1"
+					"name": "ConditionalSplit1"
 				}
 			],
-			"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Csv\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_COMMITTED',\n\tformat: 'table') ~> DB\nsource(output(\n\t\tmovieId as string,\n\t\ttitle as string,\n\t\tgenres as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Movie3\nCsv alterRow(updateIf(title == 'All is Lost')) ~> Rijwijzigen1\nRijwijzigen1 derive(title = title + '(' + toString(year) + ')' ) ~> Afgeleidekolom1\nAfgeleidekolom1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:false,\n\tupdateable:true,\n\tupsertable:false,\n\tkeys:['movie'],\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> Csv\nCsv split(year > 1950,\n\tyear < 1950,\n\tdisjoint: false) ~> DifferenceYears@(Before1950, After)\nDifferenceYears@After split(year > 1925,\n\tyear < 1925,\n\tdisjoint: false) ~> ConditionalSplit1@(Before25, After25)\nDifferenceYears@Before1950 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1\nConditionalSplit1@Before25 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink2\nConditionalSplit1@After25 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink3"
 		}
 	}
 }
