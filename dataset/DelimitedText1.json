@@ -14,8 +14,34 @@
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "6100",
+				"type": "String"
+			},
+			{
+				"name": "Midsummer Night's Sex Comedy, A",
+				"type": "String"
+			},
+			{
+				"name": "Comedy|Romance",
+				"type": "String"
+			},
+			{
+				"name": "1982",
+				"type": "String"
+			},
+			{
+				"name": "5",
+				"type": "String"
+			},
+			{
+				"name": "78",
+				"type": "String"
+			}
+		]
 	}
 }
