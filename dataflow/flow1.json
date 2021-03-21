@@ -10,6 +10,9 @@
 						"type": "DatasetReference"
 					},
 					"name": "moviesdbfile"
+				},
+				{
+					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -23,10 +26,25 @@
 			],
 			"transformations": [
 				{
+					"name": "Year"
+				},
+				{
 					"name": "SurrogateKey1"
+				},
+				{
+					"name": "SurrogateKey2"
+				},
+				{
+					"name": "SurrogateKey3"
+				},
+				{
+					"name": "SurrogateKey4"
+				},
+				{
+					"name": "SurrogateKey5"
 				}
 			],
-			"script": "source(output(\n\t\tmovie as string,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as string,\n\t\tRating as string,\n\t\t{Rotton Tomato} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> moviesdbfile\nmoviesdbfile keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> SurrogateKey1\nSurrogateKey1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tmovie,\n\t\ttitle,\n\t\tgenres,\n\t\tyear,\n\t\tRating,\n\t\t{Rotton Tomato}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "source(output(\n\t\tmovie as integer,\n\t\ttitle as string,\n\t\tgenres as string,\n\t\tyear as short,\n\t\tRating as short,\n\t\t{Rotton Tomato} as short\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> moviesdbfile\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nmoviesdbfile split(year <= 1920,\n\tyear <=1940,\n\tyear <=1960,\n\tyear <=1980,\n\tyear >=1980,\n\tdisjoint: false) ~> Year@(kleinerALS1920, kleinerALS1940, kleinerALS1960, KleinerALS1980, GroterALS1980)\nYear@kleinerALS1920 keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> SurrogateKey1\nYear@kleinerALS1940 keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> SurrogateKey2\nYear@kleinerALS1960 keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> SurrogateKey3\nYear@KleinerALS1980 keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> SurrogateKey4\nYear@GroterALS1980 keyGenerate(output(movie as long),\n\tstartAt: 1L) ~> SurrogateKey5\nSurrogateKey1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tmapColumn(\n\t\tmovie,\n\t\ttitle,\n\t\tgenres,\n\t\tyear,\n\t\tRating,\n\t\t{Rotton Tomato}\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
