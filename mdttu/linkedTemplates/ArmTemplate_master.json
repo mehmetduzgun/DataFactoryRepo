@@ -1,0 +1,126 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "mdttu"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"Movie1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Movie1'"
+		},
+		"Output_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Output'"
+		},
+		"SQLDB_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'SQLDB'"
+		},
+		"moviesdb_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'moviesdb'"
+		},
+		"outputfiles_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'outputfiles'"
+		},
+		"toazureservice_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'toazureservice'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://weulocation.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://mysecretsk.vault.azure.net/"
+		},
+		"MovieLake_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://demorotterdam.dfs.core.windows.net"
+		},
+		"Output_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://demorotterdam.dfs.core.windows.net"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "mdttu_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"Movie1_connectionString": {
+						"value": "[parameters('Movie1_connectionString')]"
+					},
+					"Output_accountKey": {
+						"value": "[parameters('Output_accountKey')]"
+					},
+					"SQLDB_connectionString": {
+						"value": "[parameters('SQLDB_connectionString')]"
+					},
+					"moviesdb_connectionString": {
+						"value": "[parameters('moviesdb_connectionString')]"
+					},
+					"outputfiles_connectionString": {
+						"value": "[parameters('outputfiles_connectionString')]"
+					},
+					"toazureservice_connectionString": {
+						"value": "[parameters('toazureservice_connectionString')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureKeyVault1_properties_typeProperties_baseUrl": {
+						"value": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+					},
+					"Output_properties_typeProperties_url": {
+						"value": "[parameters('Output_properties_typeProperties_url')]"
+					},
+					"MovieLake_properties_typeProperties_url": {
+						"value": "[parameters('MovieLake_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

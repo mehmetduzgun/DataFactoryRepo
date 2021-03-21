@@ -1,0 +1,51 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "mdttu"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"Movie1_connectionString": {
+			"value": ""
+		},
+		"Output_accountKey": {
+			"value": ""
+		},
+		"SQLDB_connectionString": {
+			"value": ""
+		},
+		"moviesdb_connectionString": {
+			"value": ""
+		},
+		"outputfiles_connectionString": {
+			"value": ""
+		},
+		"toazureservice_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://weulocation.dfs.core.windows.net"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://mysecretsk.vault.azure.net/"
+		},
+		"MovieLake_properties_typeProperties_url": {
+			"value": "https://demorotterdam.dfs.core.windows.net"
+		},
+		"Output_properties_typeProperties_url": {
+			"value": "https://demorotterdam.dfs.core.windows.net"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
