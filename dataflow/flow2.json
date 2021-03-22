@@ -26,12 +26,9 @@
 				},
 				{
 					"name": "Aggregate1"
-				},
-				{
-					"name": "Sort1"
 				}
 			],
-			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\ntest1, test3 union(byName: true)~> Union1\nUnion1 aggregate(groupBy(ID,\n\t\tvoornaam),\n\teach(match(name !='ID'), $$ = first($$)),\n\t\teach(match(name !='voornaam'), $$ = first($$))) ~> Aggregate1\nAggregate1 sort(asc(Aggregate1@ID, true)) ~> Sort1"
+			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\ntest1, test3 union(byName: true)~> Union1\nUnion1 aggregate(groupBy(voornaam),\n\teach(match(name !='voornaam'), $$ = first($$))) ~> Aggregate1"
 		}
 	}
 }
