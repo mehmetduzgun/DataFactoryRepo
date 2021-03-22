@@ -20,15 +20,19 @@
 		},
 		"schema": [
 			{
+				"name": "ID",
 				"type": "String"
 			},
 			{
+				"name": "voornaam",
 				"type": "String"
 			},
 			{
+				"name": "achternaam",
 				"type": "String"
 			},
 			{
+				"name": "geboortedatum",
 				"type": "String"
 			}
 		]
