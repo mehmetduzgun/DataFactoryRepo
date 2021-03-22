@@ -1,5 +1,5 @@
 {
-	"name": "flow2",
+	"name": "distinct",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
