@@ -1,0 +1,16 @@
+{
+	"name": "dbtest1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dbtestfile",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dz",
+			"table": "test1"
+		}
+	}
+}
