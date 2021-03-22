@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "PartioneringYears",
+				"name": "Test",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
