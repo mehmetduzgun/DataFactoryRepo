@@ -1,0 +1,40 @@
+{
+	"name": "test3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "test3",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "test3.csv",
+				"container": "input"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "voornaam",
+				"type": "String"
+			},
+			{
+				"name": "achternaam",
+				"type": "String"
+			},
+			{
+				"name": "geboortedatum",
+				"type": "String"
+			}
+		]
+	}
+}
