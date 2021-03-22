@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "test3"
+				},
+				{
+					"dataset": {
+						"referenceName": "test2",
+						"type": "DatasetReference"
+					},
+					"name": "test2"
 				}
 			],
 			"sinks": [],
@@ -25,10 +32,13 @@
 					"name": "Union1"
 				},
 				{
+					"name": "Union2"
+				},
+				{
 					"name": "Aggregate1"
 				}
 			],
-			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\ntest1, test3 union(byName: true)~> Union1\nUnion1 aggregate(groupBy(voornaam),\n\teach(match(name !='voornaam'), $$ = first($$))) ~> Aggregate1"
+			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test2\ntest1, test3 union(byName: true)~> Union1\nUnion1, test2 union(byName: true)~> Union2\nUnion2 aggregate(groupBy(voornaam),\n\teach(match(name != 'voornaam'), $$ = first($$))) ~> Aggregate1"
 		}
 	}
 }
