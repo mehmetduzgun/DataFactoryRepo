@@ -32,9 +32,12 @@
 				},
 				{
 					"name": "AddHashExisting"
+				},
+				{
+					"name": "AddKey"
 				}
 			],
-			"script": "parameters{\n\tPrimaryKey as string (ID),\n\tColumns as string ('voornaam,achternaam,geboortedatum')\n}\nsource(output(\n\t\tID as string,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourcefile\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> bestaandedbtabel\nsourcefile derive(ID_hash = md5(byName($PrimaryKey)),\n\t\tColumns_hash = md5(byNames(split($Columns,',')))) ~> AddHashInput\nAddHashInput, AddHashExisting exists(AddHashInput@ID_hash == ERROR_FUNCTION(''),\n\tnegate:true,\n\tbroadcast: 'auto')~> NewAndUpdatedRows\nbestaandedbtabel filter(\r\ntoInteger(byName('Active')) == 1) ~> Filter1\nFilter1 derive(ID_hash = md5(byNames(split($PrimaryKey,','))),\n\t\tColumns_hash = md5(byNames(split($Columns,',')))) ~> AddHashExisting"
+			"script": "parameters{\n\tPrimaryKey as string (ID),\n\tColumns as string ('voornaam,achternaam,geboortedatum')\n}\nsource(output(\n\t\tID as string,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> sourcefile\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> bestaandedbtabel\nsourcefile derive(ID_hash = md5(byName($PrimaryKey)),\n\t\tColumns_hash = md5(byNames(split($Columns,',')))) ~> AddHashInput\nAddHashInput, AddHashExisting exists(AddHashInput@ID_hash == ERROR_FUNCTION(''),\n\tnegate:true,\n\tbroadcast: 'auto')~> NewAndUpdatedRows\nbestaandedbtabel filter(\r\ntoInteger(byName('Active')) == 1) ~> Filter1\nFilter1 derive(ID_hash = md5(byNames(split($PrimaryKey,','))),\n\t\tColumns_hash = md5(byNames(split($Columns,',')))) ~> AddHashExisting\nNewAndUpdatedRows keyGenerate(output(Key as long),\n\tstartAt: 1L) ~> AddKey"
 		}
 	}
 }
