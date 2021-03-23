@@ -17,7 +17,11 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "flow1",
-						"type": "DataFlowReference"
+						"type": "DataFlowReference",
+						"parameters": {
+							"PrimaryKey": "ID",
+							"Columns": "'voornaam,achternaam,geboortedatum'"
+						}
 					},
 					"compute": {
 						"coreCount": 8,
@@ -27,6 +31,20 @@
 				}
 			}
 		],
+		"parameters": {
+			"IncomingDimensionFolder": {
+				"type": "string"
+			},
+			"DimensionTable": {
+				"type": "string"
+			},
+			"PrimaryKey": {
+				"type": "string"
+			},
+			"ColumnNames": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
