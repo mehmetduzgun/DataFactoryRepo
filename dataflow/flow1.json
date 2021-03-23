@@ -31,9 +31,15 @@
 			"transformations": [
 				{
 					"name": "Exists1"
+				},
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "SurrogateKey1"
 				}
 			],
-			"script": "source(output(\n\t\tID as string,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as string,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> test3\ntest1, test3 exists(test1@voornaam == test3@voornaam,\n\tnegate:true,\n\tbroadcast: 'right')~> Exists1\nExists1 sink(allowSchemaDrift: true,\n\tvalidateSchema: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpreSQLs:['DELETE FROM [dz].[test1] WHERE ID = 3 '],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+			"script": "source(output(\n\t\tID as string,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as string,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> test3\nSurrogateKey1, test3 exists(DerivedColumn1@voornaam == test3@voornaam,\n\tnegate:true,\n\tbroadcast: 'right')~> Exists1\ntest1 derive(voornaam = voornaam + ' ' + achternaam) ~> DerivedColumn1\nDerivedColumn1 keyGenerate(output(ID as long),\n\tstartAt: 1546L) ~> SurrogateKey1\nExists1 sink(allowSchemaDrift: true,\n\tvalidateSchema: true,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpreSQLs:['DELETE FROM [dz].[test1] WHERE ID = 3 '],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
