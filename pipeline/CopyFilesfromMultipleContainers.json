@@ -1,0 +1,176 @@
+{
+	"name": "CopyFilesfromMultipleContainers",
+	"properties": {
+		"description": "Scan the file path on your source storage store and get the container list.",
+		"activities": [
+			{
+				"name": "EnumerateContainersList",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "Morefilescsv",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEachContainer",
+				"description": "Get the container list from Metadata activity and then iterates each of them to Copy activity.",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "EnumerateContainersList",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('EnumerateContainersList').output.childItems",
+						"type": "Expression"
+					},
+					"batchCount": 4,
+					"activities": [
+						{
+							"name": "CopyOneContainer",
+							"description": "Copy each container from source storage store to destination store.",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"wildcardFileName": "*",
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobStorageWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "ID",
+												"type": "String"
+											},
+											"sink": {
+												"name": "ID",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "voornaam",
+												"type": "String"
+											},
+											"sink": {
+												"name": "voornaam",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "achternaam",
+												"type": "String"
+											},
+											"sink": {
+												"name": "achternaam",
+												"type": "String"
+											}
+										},
+										{
+											"source": {
+												"name": "geboortedatum",
+												"type": "String"
+											},
+											"sink": {
+												"name": "geboortedatum",
+												"type": "String"
+											}
+										}
+									]
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Morefilescsv",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "outputcsv",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"SourceFileFolder": {
+				"type": "string",
+				"defaultValue": "/"
+			},
+			"SourceFileDirectory": {
+				"type": "string",
+				"defaultValue": "/"
+			},
+			"DestinationFileFolder": {
+				"type": "string",
+				"defaultValue": "/"
+			},
+			"DestinationFileDirectory": {
+				"type": "string",
+				"defaultValue": "/"
+			}
+		},
+		"annotations": []
+	}
+}
