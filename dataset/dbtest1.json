@@ -7,7 +7,24 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "voornaam",
+				"type": "nvarchar"
+			},
+			{
+				"name": "achternaam",
+				"type": "nvarchar"
+			},
+			{
+				"name": "geboortedatum",
+				"type": "nvarchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dz",
 			"table": "test1"
