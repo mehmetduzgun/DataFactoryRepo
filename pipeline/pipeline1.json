@@ -27,8 +27,8 @@
 				}
 			},
 			{
-				"name": "Validation1",
-				"type": "Validation",
+				"name": "Filter1",
+				"type": "Filter",
 				"dependsOn": [
 					{
 						"activity": "Test",
@@ -37,14 +37,21 @@
 						]
 					}
 				],
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "voornaam",
+						"value": "Mehmet"
+					}
+				],
 				"typeProperties": {
-					"dataset": {
-						"referenceName": "dbtest1",
-						"type": "DatasetReference"
+					"items": {
+						"value": "@activity('Test').output",
+						"type": "Expression"
 					},
-					"timeout": "7.00:00:00",
-					"sleep": 10
+					"condition": {
+						"value": "@activity('Test').outputconcat()",
+						"type": "Expression"
+					}
 				}
 			}
 		],
