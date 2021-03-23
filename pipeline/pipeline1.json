@@ -40,6 +40,12 @@
 									"value": "@pipeline().parameters.DimensionTable",
 									"type": "Expression"
 								}
+							},
+							"DimensionTableSink": {
+								"Table": {
+									"value": "@pipeline().parameters.DimensionTable",
+									"type": "Expression"
+								}
 							}
 						}
 					},
