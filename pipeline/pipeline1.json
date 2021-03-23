@@ -25,34 +25,6 @@
 					},
 					"traceLevel": "Fine"
 				}
-			},
-			{
-				"name": "Filter1",
-				"type": "Filter",
-				"dependsOn": [
-					{
-						"activity": "Test",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"userProperties": [
-					{
-						"name": "voornaam",
-						"value": "Mehmet"
-					}
-				],
-				"typeProperties": {
-					"items": {
-						"value": "@activity('Test').output",
-						"type": "Expression"
-					},
-					"condition": {
-						"value": "@activity('Test').outputconcat()",
-						"type": "Expression"
-					}
-				}
 			}
 		],
 		"annotations": []
