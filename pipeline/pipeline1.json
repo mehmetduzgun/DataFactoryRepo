@@ -19,8 +19,28 @@
 						"referenceName": "flow1",
 						"type": "DataFlowReference",
 						"parameters": {
-							"PrimaryKey": "ID",
-							"Columns": "'voornaam,achternaam,geboortedatum'"
+							"PrimaryKey": {
+								"value": "'@{pipeline().parameters.PrimaryKey}'",
+								"type": "Expression"
+							},
+							"Columns": {
+								"value": "'@{pipeline().parameters.ColumnNames}'",
+								"type": "Expression"
+							}
+						},
+						"datasetParameters": {
+							"sourcefile": {
+								"Folder": {
+									"value": "@pipeline().parameters.IncomingDimensionFolder",
+									"type": "Expression"
+								}
+							},
+							"bestaandedbtabel": {
+								"Table": {
+									"value": "@pipeline().parameters.DimensionTable",
+									"type": "Expression"
+								}
+							}
 						}
 					},
 					"compute": {
