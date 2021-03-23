@@ -25,7 +25,7 @@
 					"name": "DerivedColumn1"
 				}
 			],
-			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\ntest1 derive(voornaam = voornaam + ' ' + achternaam + ' ' + geboortedatum) ~> DerivedColumn1"
+			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\ntest1 derive(voornaam = voornaam + ' ' + achternaam + ' ' + toString(geboortedatum)) ~> DerivedColumn1"
 		}
 	}
 }
