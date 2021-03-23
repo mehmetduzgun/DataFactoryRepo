@@ -22,10 +22,10 @@
 			"sinks": [],
 			"transformations": [
 				{
-					"name": "Join1"
+					"name": "DerivedColumn1"
 				}
 			],
-			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\ntest1, test3 join(test1@achternaam == test3@achternaam,\n\tjoinType:'outer',\n\tbroadcast: 'right')~> Join1"
+			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\ntest1 derive(voornaam = voornaam + ' ' + achternaam) ~> DerivedColumn1"
 		}
 	}
 }
