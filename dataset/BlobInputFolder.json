@@ -1,0 +1,32 @@
+{
+	"name": "BlobInputFolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "test2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filename": {
+				"type": "string",
+				"defaultValue": "DimProducts.csv"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"container": "input"
+			},
+			"columnDelimiter": "|",
+			"encodingName": "UTF-8",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
