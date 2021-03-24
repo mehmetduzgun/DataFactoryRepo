@@ -8,14 +8,14 @@
 		"parameters": {
 			"Table": {
 				"type": "string",
-				"defaultValue": "test1"
+				"defaultValue": "Table_1"
 			}
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "dz",
+			"schema": "dbo",
 			"table": {
 				"value": "@dataset().Table",
 				"type": "Expression"
