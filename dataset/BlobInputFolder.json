@@ -8,7 +8,7 @@
 		"parameters": {
 			"filename": {
 				"type": "string",
-				"defaultValue": "DimProducts.csv"
+				"defaultValue": "test1.csv"
 			}
 		},
 		"annotations": [],
@@ -16,7 +16,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "test2.csv",
+				"fileName": "test1.csv",
 				"container": "input"
 			},
 			"columnDelimiter": ",",
