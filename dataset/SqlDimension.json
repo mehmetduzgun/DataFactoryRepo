@@ -28,24 +28,24 @@
 			},
 			{
 				"name": "geboortedatum",
-				"type": "nchar"
+				"type": "nvarchar"
 			},
 			{
 				"name": "Key",
+				"type": "binary"
+			},
+			{
+				"name": "Active",
 				"type": "int",
 				"precision": 10
 			},
 			{
-				"name": "Active",
-				"type": "nchar"
-			},
-			{
 				"name": "ActiveStartTime",
-				"type": "nvarchar"
+				"type": "timestamp"
 			},
 			{
 				"name": "ActiveEndTime",
-				"type": "timestamp"
+				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {
