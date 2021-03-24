@@ -50,16 +50,6 @@
 				"name": "Weight",
 				"type": "int",
 				"precision": 10
-			},
-			{
-				"name": "ProductCategoryID",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "ProductModelID",
-				"type": "int",
-				"precision": 10
 			}
 		],
 		"typeProperties": {
