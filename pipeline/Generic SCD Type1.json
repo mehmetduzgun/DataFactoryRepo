@@ -23,17 +23,14 @@
 							"dimname": "'Dimproducts'",
 							"keycol": "'ProductNumber'",
 							"SurrogateKey": "'ProductID'",
-							"tablename": "'Table_1'"
+							"tablename": "'Dimproducts'"
 						},
 						"datasetParameters": {
-							"NewMembers1": {
-								"filename": "test1.csv"
-							},
 							"sink1": {
-								"tablename": "Table_1"
+								"tablename": "Dimproducts"
 							},
 							"sink2": {
-								"tablename": "Table_1"
+								"tablename": "Dimproducts"
 							}
 						}
 					},
