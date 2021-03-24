@@ -42,7 +42,9 @@
 			},
 			{
 				"name": "ActiveStartTime",
-				"type": "nchar"
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
 			},
 			{
 				"name": "ActiveEndTime",
