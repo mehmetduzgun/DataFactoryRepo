@@ -19,13 +19,27 @@
 				"fileName": "test2.csv",
 				"container": "input"
 			},
-			"columnDelimiter": "|",
+			"columnDelimiter": ",",
 			"encodingName": "UTF-8",
 			"escapeChar": "\\",
+			"firstRowAsHeader": true,
 			"quoteChar": "\""
 		},
 		"schema": [
 			{
+				"name": "ID",
+				"type": "String"
+			},
+			{
+				"name": "voornaam",
+				"type": "String"
+			},
+			{
+				"name": "achternaam",
+				"type": "String"
+			},
+			{
+				"name": "geboortedatum",
 				"type": "String"
 			}
 		]
