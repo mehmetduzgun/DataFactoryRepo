@@ -32,7 +32,8 @@
 			},
 			{
 				"name": "Key",
-				"type": "binary"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "Active",
