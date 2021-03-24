@@ -5,18 +5,12 @@
 			"referenceName": "test2",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"filename": {
-				"type": "string",
-				"defaultValue": "test1.csv"
-			}
-		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "test1.csv",
+				"fileName": "Product2.csv",
 				"container": "input"
 			},
 			"columnDelimiter": ",",
@@ -27,19 +21,43 @@
 		},
 		"schema": [
 			{
-				"name": "ID",
+				"name": "ProductID",
 				"type": "String"
 			},
 			{
-				"name": "voornaam",
+				"name": "Name",
 				"type": "String"
 			},
 			{
-				"name": "achternaam",
+				"name": "ProductNumber",
 				"type": "String"
 			},
 			{
-				"name": "geboortedatum",
+				"name": "Color",
+				"type": "String"
+			},
+			{
+				"name": "StandardCost",
+				"type": "String"
+			},
+			{
+				"name": "ListPrice",
+				"type": "String"
+			},
+			{
+				"name": "Size",
+				"type": "String"
+			},
+			{
+				"name": "Weight",
+				"type": "String"
+			},
+			{
+				"name": "ProductCategoryID",
+				"type": "String"
+			},
+			{
+				"name": "ProductModelID",
 				"type": "String"
 			}
 		]
