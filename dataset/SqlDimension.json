@@ -42,7 +42,7 @@
 			},
 			{
 				"name": "ActiveStartTime",
-				"type": "timestamp"
+				"type": "nchar"
 			},
 			{
 				"name": "ActiveEndTime",
