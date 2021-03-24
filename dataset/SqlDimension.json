@@ -29,7 +29,8 @@
 			},
 			{
 				"name": "geboortedatum",
-				"type": "nvarchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "Key",
