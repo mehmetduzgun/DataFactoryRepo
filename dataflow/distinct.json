@@ -26,7 +26,15 @@
 					"name": "test2"
 				}
 			],
-			"sinks": [],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
 			"transformations": [
 				{
 					"name": "Union1"
@@ -38,7 +46,7 @@
 					"name": "Aggregate1"
 				}
 			],
-			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test2\ntest1, test3 union(byName: true)~> Union1\nUnion1, test2 union(byName: true)~> Union2\nUnion2 aggregate(groupBy(voornaam),\n\teach(match(name != 'voornaam'), $$ = first($$))) ~> Aggregate1"
+			"script": "source(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test1\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test3\nsource(output(\n\t\tID as short,\n\t\tvoornaam as string,\n\t\tachternaam as string,\n\t\tgeboortedatum as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> test2\ntest1, test3 union(byName: true)~> Union1\nUnion1, test2 union(byName: true)~> Union2\nUnion2 aggregate(groupBy(voornaam),\n\teach(match(name!='voornaam'), $$ = first($$))) ~> Aggregate1\nAggregate1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
 		}
 	}
 }
