@@ -16,7 +16,8 @@
 		"schema": [
 			{
 				"name": "ID",
-				"type": "nchar"
+				"type": "int",
+				"precision": 10
 			},
 			{
 				"name": "voornaam",
