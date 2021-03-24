@@ -2,7 +2,7 @@
 	"name": "dbtest1",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "dbtestfile",
+			"referenceName": "deschdb",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
