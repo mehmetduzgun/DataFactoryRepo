@@ -21,7 +21,7 @@
 						"type": "DataFlowReference",
 						"parameters": {
 							"dimname": "'Table_1'",
-							"keycol": "'ID'",
+							"keycol": "'voornaam'",
 							"SurrogateKey": "'ID'",
 							"tablename": "'Table_1'"
 						},
