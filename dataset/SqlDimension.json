@@ -41,11 +41,11 @@
 			},
 			{
 				"name": "ActiveStartTime",
-				"type": "timestamp"
+				"type": "nvarchar"
 			},
 			{
 				"name": "ActiveEndTime",
-				"type": "nvarchar"
+				"type": "timestamp"
 			}
 		],
 		"typeProperties": {
