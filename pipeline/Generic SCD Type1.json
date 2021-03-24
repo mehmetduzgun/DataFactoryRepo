@@ -20,7 +20,7 @@
 						"referenceName": "scdT1Generic",
 						"type": "DataFlowReference",
 						"parameters": {
-							"dimname": "'Table_1'",
+							"dimname": "'Dimproducts'",
 							"keycol": "'ProductNumber'",
 							"SurrogateKey": "'ProductID'",
 							"tablename": "'Table_1'"
