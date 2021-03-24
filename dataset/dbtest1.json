@@ -9,25 +9,56 @@
 		"type": "AzureSqlTable",
 		"schema": [
 			{
-				"name": "ID",
+				"name": "ProductID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Name",
 				"type": "nvarchar"
 			},
 			{
-				"name": "voornaam",
+				"name": "Productnumber",
 				"type": "nvarchar"
 			},
 			{
-				"name": "achternaam",
+				"name": "Color",
 				"type": "nvarchar"
 			},
 			{
-				"name": "geboortedatum",
-				"type": "nvarchar"
+				"name": "StandardCost",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ListPrice",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Size",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Weight",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductCategoryID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ProductModelID",
+				"type": "int",
+				"precision": 10
 			}
 		],
 		"typeProperties": {
 			"schema": "dbo",
-			"table": "Table_1"
+			"table": "Dimproducts"
 		}
 	}
 }
