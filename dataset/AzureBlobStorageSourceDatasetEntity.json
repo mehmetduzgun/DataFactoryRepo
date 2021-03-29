@@ -1,0 +1,11 @@
+{
+	"name": "AzureBlobStorageSourceDatasetEntity",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "moviesdb",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureBlob"
+	}
+}
